@@ -146,6 +146,8 @@ function forcaDaSenha(e) {
     senhaTrimada.match(regexSenhaNumeros).input.length >= 1
   ) {
     meter.value = 10;
+    passwordHelp.textContent = "Senha fraca";
+    passwordHelp.style.color = "red";
   } else if (
     senhaTrimada.length >= 8 &&
     senhaTrimada.length < 12 &&
@@ -154,6 +156,8 @@ function forcaDaSenha(e) {
     senhaTrimada.match(regexMaisculas).input.length >= 1
   ) {
     meter.value = 20;
+    passwordHelp.textContent = "Senha moderada";
+    passwordHelp.style.color = "orange";
   } else if (
     senhaTrimada.length >= 12 &&
     senhaTrimada.match(regexSenhaCaracteresSpeciais).input.length > 1 &&
@@ -161,6 +165,8 @@ function forcaDaSenha(e) {
     senhaTrimada.match(regexMaisculas).input.length > 1
   ) {
     meter.value = 30;
+    passwordHelp.textContent = "Senha forte";
+    passwordHelp.style.color = "green";
   }
 }
 
