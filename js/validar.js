@@ -9,45 +9,46 @@ var emailHelp = document.querySelector("#inputEmailHelp");
 var password = document.querySelector("#inputPassword");
 var passwordHelp = document.querySelector("#inputPasswordHelp");
 var meter = document.querySelector("#passStrengthMeter");
+var meter = document.querySelector("#passStrengthMeter");
+var formularioValido = false;
+var resultado = document.querySelector("#inputResult");
 
 /*declarando o evento listener para o campos de texto do form. 
-Uma vez o foco do campo inputName mude, será chamada a função validarNome*/
-nome.addEventListener("focusout", validarNome);
+Uma vez o foco do campo inputName mude, será chamada a função validaNome*/
+nome.addEventListener("focusout", validaNome);
 
-/*declaração tradicional de função validarNome(e)
+/*declaração tradicional de função validaNome(e)
 'e' é o objeto do tipo evento que contém, alpem de outras propriedades, o objeto que iniciou o evento,
 neste caso o objeto 'nome'
 */
 
-function validarNome(e) {
+function validaNome(nomeParam) {
   //Valida o primeiro nome com a primeira letra maiúscula
   const regexNome = /^[A-Z][a-z]+$/;
-
+  const nomeTrimado = nomeParam?.target.value.trim() || nome.value.trim();
   /**
    * Regra 1: O nome do usuário somente deve conter letras e deve ser de cumprimento maior a 6
    */
-  if (
-    e.target.value.trim().match(regexNome) == null ||
-    e.target.value.length <= 6
-  ) {
+  if (nomeTrimado.match(regexNome) == null || nomeTrimado.length <= 6) {
     //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputNameHelp
     nomeHelp.textContent = "Formato de nome inválido";
     nomeHelp.style.color = "red";
+    return false;
   } else {
     nomeHelp.textContent = "";
+    return true;
   }
 }
 
 /*declarando o evento listener para o campos de texto do form. 
-Uma vez o foco seja mudado, será chamada a função validarNome*/
+Uma vez o foco seja mudado, será chamada a função validaNome*/
 
 //declaração de função de forma anônima usando uma expressão de função de seta =>
-
-ano.addEventListener("focusout", () => {
+function validaAno(anoParam) {
   //declaração da expressão regular para definir o formato de um ano válido
   const regexAno = /^[0-9]{4}$/;
   //tirar (trim) espaços em branco antes e depois da string
-  const anoTrimado = ano.value.trim();
+  const anoTrimado = anoParam?.target.value.trim() || ano.value.trim();
   const menorAnoPermitido = 1900;
   const maiorAnoPermitido = 2022;
 
@@ -55,6 +56,7 @@ ano.addEventListener("focusout", () => {
     //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputYearHelp
     anoHelp.textContent = "Formato de ano inválido";
     anoHelp.style.color = "red";
+    return false;
   } else {
     //objeto Date
     var date = new Date();
@@ -62,30 +64,38 @@ ano.addEventListener("focusout", () => {
       //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputYearHelp
       anoHelp.textContent = `Ano inválido. O ano não pode ser maior que ${maiorAnoPermitido}.`;
       anoHelp.style.color = "red";
+      return false;
     } else if (parseInt(anoTrimado) < parseInt(menorAnoPermitido)) {
       //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputYearHelp
       anoHelp.textContent = `Ano inválido. O ano não pode ser menor que ${menorAnoPermitido}.`;
       anoHelp.style.color = "red";
+      return false;
     } else {
       anoHelp.textContent = "";
+      return true;
     }
   }
-});
+}
+ano.addEventListener("focusout", validaAno);
 
-email.addEventListener("focusout", (e) => {
+function validaEmail(emailParm) {
   const regexEmail = /^[\w-\.]+@([\w-]+\.)+(br|com|net|org)$/;
   //tirar (trim) espaços em branco antes e depois da string
-  const emailTrimado = e.target.value.trim();
+  const emailTrimado = emailParm?.target.value.trim() || email.value.trim();
   if (emailTrimado.match(regexEmail) == null) {
     emailHelp.textContent = "Formato de e-mail inválido";
     emailHelp.style.color = "red";
+    return false;
   } else {
     emailHelp.textContent = "";
+    return true;
   }
-});
+}
 
-function validaSenha(e) {
-  const senhaTrimada = e.target.value.trim();
+email.addEventListener("focusout", validaEmail);
+
+function validaSenha(senhaParam) {
+  const senhaTrimada = senhaParam?.target.value.trim() || password.value.trim();
   const regexSenhaCaracteresSpeciais = /[^a-zA-Z0-9\s]/;
   const regexSenhaNumeros = /[0-9]/;
   const regexLetras = /[a-z,A-Z]/;
@@ -94,41 +104,40 @@ function validaSenha(e) {
   if (senhaTrimada.length < menorSenha) {
     passwordHelp.textContent = `A senha não pode ter menos que ${menorSenha} caracteres`;
     passwordHelp.style.color = "red";
-    return "Senha inválida";
+    return false;
   } else if (senhaTrimada.length > maiorSenha) {
     passwordHelp.textContent = `A senha não pode ter mais que ${maiorSenha} caracteres`;
     passwordHelp.style.color = "red";
-    return "Senha inválida";
+    return false;
   } else if (senhaTrimada.match(regexSenhaCaracteresSpeciais) === null) {
     passwordHelp.textContent = "A senha não possuí caracteres especiais";
     passwordHelp.style.color = "red";
-    return "Senha inválida";
+    return false;
   } else if (senhaTrimada.match(regexSenhaNumeros) === null) {
     passwordHelp.textContent = "A senha não possuí números";
     passwordHelp.style.color = "red";
-    return "Senha inválida";
+    return false;
   } else if (senhaTrimada.match(regexLetras) === null) {
     passwordHelp.textContent = "A senha não possuí letras";
     passwordHelp.style.color = "red";
-    return "Senha inválida";
+    return false;
   } else if (senhaTrimada.match(new RegExp(nome.value.toLowerCase(), "gi"))) {
     passwordHelp.textContent = "A senha não pode incluir seu nome";
     passwordHelp.style.color = "red";
-    return "Senha inválida";
+    return false;
   } else if (senhaTrimada.match(new RegExp(ano.value.toLowerCase(), "gi"))) {
     passwordHelp.textContent =
       "A senha não pode incluir o seu ano de nascimento";
     passwordHelp.style.color = "red";
-    return "Senha inválida";
+    return false;
   } else {
     passwordHelp.textContent = "";
-    console.log(senhaTrimada.match(regexSenhaCaracteresSpeciais));
-    return "Senha válida";
+    return true;
   }
 }
 
 function forcaDaSenha(e) {
-  const senhaTrimada = e.target.value.trim();
+  const senhaTrimada = e?.target.value.trim() || password.value.trim();
   const regexSenhaCaracteresSpeciais = /[^a-zA-Z0-9\s]/;
   const regexSenhaNumeros = /[0-9]/;
   const regexMaisculas = /[A-Z]/;
@@ -157,7 +166,18 @@ function forcaDaSenha(e) {
 }
 
 password.addEventListener("keyup", (e) => {
-  if (validaSenha(e) === "Senha válida") {
+  if (validaSenha(e)) {
     forcaDaSenha(e);
+    formularioValido = true;
   }
 });
+
+function enviarCadastro() {
+  if (validaNome() && validaAno() && validaSenha() && validaEmail()) {
+    resultado.textContent = "Seus dados foram registrados";
+    resultado.style.color = "green";
+  } else {
+    resultado.textContent = "Seus dados não foram registrados";
+    resultado.style.color = "red";
+  }
+}
