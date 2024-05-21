@@ -93,7 +93,7 @@ function validaEmail(emailParm) {
 
 email.addEventListener("focusout", validaEmail);
 
-function validaSenha(senhaParam) {
+function validaSenha(exec = true, senhaParam) {
   const senhaTrimada = senhaParam?.target.value.trim() || password.value.trim();
   const regexSenhaCaracteresSpeciais = /[^a-zA-Z0-9\s]/;
   const regexSenhaNumeros = /[0-9]/;
@@ -130,8 +130,12 @@ function validaSenha(senhaParam) {
     passwordHelp.style.color = "red";
     return false;
   } else {
-    passwordHelp.textContent = "";
-    return true;
+    if (exec) {
+      passwordHelp.textContent = "";
+      return true;
+    } else {
+      return true;
+    }
   }
 }
 
@@ -149,8 +153,8 @@ function forcaDaSenha(e) {
     passwordHelp.textContent = "Senha fraca";
     passwordHelp.style.color = "red";
   } else if (
-    senhaTrimada.length >= 8 &&
     senhaTrimada.length < 12 &&
+    senhaTrimada.length >= 8 &&
     senhaTrimada.match(regexSenhaCaracteresSpeciais).input.length >= 1 &&
     senhaTrimada.match(regexSenhaNumeros).input.length >= 1 &&
     senhaTrimada.match(regexMaisculas).input.length >= 1
@@ -167,6 +171,8 @@ function forcaDaSenha(e) {
     meter.value = 30;
     passwordHelp.textContent = "Senha forte";
     passwordHelp.style.color = "green";
+  } else {
+    passwordHelp.textContent = "";
   }
 }
 
@@ -177,7 +183,7 @@ password.addEventListener("keyup", (e) => {
 });
 
 function enviarCadastro() {
-  if (validaNome() && validaAno() && validaSenha() && validaEmail()) {
+  if (validaNome() && validaAno() && validaSenha(false) && validaEmail()) {
     resultado.textContent = "Seus dados foram registrados";
     resultado.style.color = "green";
   } else {
