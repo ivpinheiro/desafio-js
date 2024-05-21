@@ -30,7 +30,7 @@ function validaNome(nomeParam) {
    */
   if (nomeTrimado.match(regexNome) == null || nomeTrimado.length <= 6) {
     //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputNameHelp
-    nomeHelp.textContent = "Formato de nome inválido";
+    nomeHelp.textContent = "Nome inválido";
     nomeHelp.style.color = "red";
     return false;
   } else {
@@ -53,7 +53,7 @@ function validaAno(anoParam) {
 
   if (anoTrimado.match(regexAno) == null) {
     //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputYearHelp
-    anoHelp.textContent = "Formato de ano inválido";
+    anoHelp.textContent = "Ano inválido";
     anoHelp.style.color = "red";
     return false;
   } else {
@@ -61,12 +61,12 @@ function validaAno(anoParam) {
     var date = new Date();
     if (parseInt(anoTrimado) > parseInt(maiorAnoPermitido)) {
       //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputYearHelp
-      anoHelp.textContent = `Ano inválido. O ano não pode ser maior que ${maiorAnoPermitido}.`;
+      anoHelp.textContent = `Ano inválido`;
       anoHelp.style.color = "red";
       return false;
     } else if (parseInt(anoTrimado) < parseInt(menorAnoPermitido)) {
       //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputYearHelp
-      anoHelp.textContent = `Ano inválido. O ano não pode ser menor que ${menorAnoPermitido}.`;
+      anoHelp.textContent = `Ano inválido`;
       anoHelp.style.color = "red";
       return false;
     } else {
@@ -101,32 +101,31 @@ function validaSenha(exec = true, senhaParam) {
   const menorSenha = 6;
   const maiorSenha = 20;
   if (senhaTrimada.length < menorSenha) {
-    passwordHelp.textContent = `A senha não pode ter menos que ${menorSenha} caracteres`;
+    passwordHelp.textContent = `Senha inválida`;
     passwordHelp.style.color = "red";
     return false;
   } else if (senhaTrimada.length > maiorSenha) {
-    passwordHelp.textContent = `A senha não pode ter mais que ${maiorSenha} caracteres`;
+    passwordHelp.textContent = `Senha inválida`;
     passwordHelp.style.color = "red";
     return false;
   } else if (senhaTrimada.match(regexSenhaCaracteresSpeciais) === null) {
-    passwordHelp.textContent = "A senha não possuí caracteres especiais";
+    passwordHelp.textContent = "Senha inválida";
     passwordHelp.style.color = "red";
     return false;
   } else if (senhaTrimada.match(regexSenhaNumeros) === null) {
-    passwordHelp.textContent = "A senha não possuí números";
+    passwordHelp.textContent = "Senha inválida";
     passwordHelp.style.color = "red";
     return false;
   } else if (senhaTrimada.match(regexLetras) === null) {
-    passwordHelp.textContent = "A senha não possuí letras";
+    passwordHelp.textContent = "Senha inválida";
     passwordHelp.style.color = "red";
     return false;
   } else if (senhaTrimada.match(new RegExp(nome.value.toLowerCase(), "gi"))) {
-    passwordHelp.textContent = "A senha não pode incluir seu nome";
+    passwordHelp.textContent = "Senha inválida";
     passwordHelp.style.color = "red";
     return false;
   } else if (senhaTrimada.match(new RegExp(ano.value.toLowerCase(), "gi"))) {
-    passwordHelp.textContent =
-      "A senha não pode incluir o seu ano de nascimento";
+    passwordHelp.textContent = "Senha inválida";
     passwordHelp.style.color = "red";
     return false;
   } else {
@@ -150,7 +149,7 @@ function forcaDaSenha(e) {
     senhaTrimada.match(regexSenhaNumeros).input.length >= 1
   ) {
     meter.value = 10;
-    passwordHelp.textContent = "Senha fraca";
+    passwordHelp.textContent = "Senha fraca.";
     passwordHelp.style.color = "red";
   } else if (
     senhaTrimada.length < 12 &&
@@ -160,7 +159,7 @@ function forcaDaSenha(e) {
     senhaTrimada.match(regexMaisculas).input.length >= 1
   ) {
     meter.value = 20;
-    passwordHelp.textContent = "Senha moderada";
+    passwordHelp.textContent = "Senha moderada.";
     passwordHelp.style.color = "orange";
   } else if (
     senhaTrimada.length >= 12 &&
@@ -169,7 +168,7 @@ function forcaDaSenha(e) {
     senhaTrimada.match(regexMaisculas).input.length > 1
   ) {
     meter.value = 30;
-    passwordHelp.textContent = "Senha forte";
+    passwordHelp.textContent = "Senha forte.";
     passwordHelp.style.color = "green";
   } else {
     passwordHelp.textContent = "";
