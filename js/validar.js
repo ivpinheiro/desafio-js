@@ -10,7 +10,6 @@ var password = document.querySelector("#inputPassword");
 var passwordHelp = document.querySelector("#inputPasswordHelp");
 var meter = document.querySelector("#passStrengthMeter");
 var meter = document.querySelector("#passStrengthMeter");
-var formularioValido = false;
 var resultado = document.querySelector("#inputResult");
 
 /*declarando o evento listener para o campos de texto do form. 
@@ -168,7 +167,6 @@ function forcaDaSenha(e) {
 password.addEventListener("keyup", (e) => {
   if (validaSenha(e)) {
     forcaDaSenha(e);
-    formularioValido = true;
   }
 });
 
