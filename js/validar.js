@@ -28,7 +28,7 @@ function validaNome(nomeParam) {
   /**
    * Regra 1: O nome do usuário somente deve conter letras e deve ser de cumprimento maior a 6
    */
-  if (nomeTrimado.match(regexNome) == null || nomeTrimado.length <= 6) {
+  if (nomeTrimado.match(regexNome) == null || nomeTrimado.length >= 6) {
     //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputNameHelp
     nomeHelp.textContent = "Nome inválido";
     nomeHelp.style.color = "red";
