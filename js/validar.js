@@ -23,12 +23,12 @@ neste caso o objeto 'nome'
 
 function validaNome(nomeParam) {
   //Valida o primeiro nome com a primeira letra maiúscula
-  const regexNome = /^([A-Za-z\s]{6,})+$/;
+  const regexNome = /^([A-Za-z\s])+$/;
   const nomeTrimado = nomeParam?.target.value.trim() || nome.value.trim();
   /**
    * Regra 1: O nome do usuário somente deve conter letras e deve ser de cumprimento maior a 6
    */
-  if (nomeTrimado.match(regexNome) == null || nomeTrimado.length >= 6) {
+  if (nomeTrimado.match(regexNome) == null || nomeTrimado.length < 6) {
     //muda o conteúdo e o estilo do objeto nomeHelp que referencia o elemento html com id=inputNameHelp
     nomeHelp.textContent = "Nome inválido";
     nomeHelp.style.color = "red";
